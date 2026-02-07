@@ -1027,44 +1027,17 @@
         });
 
         // === PWA ===
-        window.addEventListener('load', () => {
-            // تسجيل Service Worker
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'aqsa-games-final';
-                    
-                    self.addEventListener('install', event => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.addAll(['./']))
-                                .then(() => self.skipWaiting())
-                        );
-                    });
-                    
-                    self.addEventListener('fetch', event => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then(response => response || fetch(event.request))
-                        );
-                    });
-                `;
-                
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swURL = URL.createObjectURL(blob);
-                
-                navigator.serviceWorker.register(swURL)
-                    .then(() => console.log('✅ Service Worker مسجل'))
-                    .catch(err => console.log('❌ Service Worker فشل:', err));
-            }
-            
-            // عرض الصفحة الرئيسية
-            showHomePage();
-            initGame();
-            
-            // عرض رسالة إذا كان التطبيق مثبتاً
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                console.log('📱 التطبيق يعمل كـ PWA');
-            }
+        window.addEventListener("load", () => {
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+              .register("./sw.js")
+              .then(() => {
+                console.log("✅ Service Worker مسجل");
+              })
+              .catch((err) => {
+                console.log("❌ Service Worker فشل:", err);
+              });
+          }
         });
 
         // رسالة عند التثبيت
