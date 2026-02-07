@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2d5016">
+    <meta name="description" content="ألعاب تعليمية ممتعة للأطفال للتعرف على معالم المسجد الأقصى">
+    
+    <title>ألعاب المسجد الأقصى التعليمية</title>
+    
+    <!-- رابط manifest الجديد -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon بسيط -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%232d5016%22>🕌</text></svg>">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="https://files.catbox.moe/k4moon.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ألعاب الأقصى">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .home-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .home-header {
+            background-color: #2d5016;
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .home-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .home-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .game-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-card-image {
+            height: 180px;
+            background-color: #2d5016;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+        
+        .game-card-content {
+            padding: 20px;
+        }
+        
+        .game-card h3 {
+            color: #2d5016;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .game-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .play-btn {
+            background-color: #2d5016;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .play-btn:hover {
+            background-color: #3a6720;
+        }
+        
+        .install-instructions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .install-instructions h3 {
+            color: #2d5016;
+            margin-bottom: 15px;
+        }
+        
+        .preview-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 4px solid #2d5016;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .preview-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .instructions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: right;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .instructions h3 {
+            color: #2d5016;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-right: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        /* بقية الأنماط للألعاب */
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            background-color: #2d5016;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #3a6720;
+        }
+        
+        .header {
+            background-color: #2d5016;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score, .matches, .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d5016;
+        }
+        
+        .game-board, .memory-game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .game-board, .memory-game-board {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-board, .memory-game-board {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .card {
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .card-front {
+            background-color: #2d5016;
+            color: white;
+            border: 3px solid #1a3310;
+            font-size: 28px;
+        }
+        
+        .card-back {
+            background-color: white;
+            color: #333;
+            transform: rotateY(180deg);
+            border: 3px solid #2d5016;
+        }
+        
+        .card-back.image-card {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .card-back.text-card {
+            font-size: 16px;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .card-back.memory-card {
+            background-color: #2d5016;
+            color: white;
+            font-size: 36px;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #2d5016;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            min-width: 150px;
+        }
+        
+        button:hover {
+            background-color: #3a6720;
+        }
+        
+        .message {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2d5016;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .difficulty-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-btn.active {
+            background-color: #2d5016;
+            color: white;
+        }
+        
+        .difficulty-btn:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .celebrate {
+            animation: celebrate 0.5s ease-in-out;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .matched {
+            border-color: gold !important;
+            box-shadow: 0 0 15px gold !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحة الرئيسية -->
+    <div id="homePage" class="home-container">
+        <header class="home-header">
+            <h1>ألعاب المسجد الأقصى التعليمية</h1>
+            <p>ألعاب تفاعلية ممتعة للأطفال للتعرف على معالم المسجد الأقصى</p>
+        </header>
+        
+        <div class="install-instructions">
+            <h3>📱 أضف التطبيق إلى الشاشة الرئيسية</h3>
+            <p>لتظهر أيقونة التطبيق الجميلة على شاشتك:</p>
+            
+            <div class="preview-icon">
+                <img src="https://files.catbox.moe/k4moon.jpg" alt="أيقونة التطبيق - صورة المسجد الأقصى">
+            </div>
+            
+            <p><strong>ستظهر هذه الصورة الجميلة على شاشتك الرئيسية!</strong></p>
+            
+            <div class="instructions">
+                <h3>🚀 خطوات التثبيت:</h3>
+                <ol>
+                    <li>افتح التطبيق في متصفح Chrome أو Edge</li>
+                    <li>انقر على زر القائمة (⋮) في الأعلى</li>
+                    <li>اختر "إضافة إلى الشاشة الرئيسية"</li>
+                    <li>انقر على "إضافة" أو "تثبيت"</li>
+                    <li>ابحث عن الأيقونة الجديدة على شاشتك!</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="games-grid">
+            <div class="game-card" data-game="cards">
+                <div class="game-card-image">
+                    🕌
+                </div>
+                <div class="game-card-content">
+                    <h3>لعبة بطاقات المسجد الأقصى</h3>
+                    <p>قم بمطابقة الصور مع أسمائها الصحيحة. تعرف على معالم المسجد الأقصى المبارك من خلال لعبة ممتعة وتفاعلية.</p>
+                    <button class="play-btn" data-game="cards">العب الآن</button>
+                </div>
+            </div>
+            
+            <div class="game-card" data-game="memory">
+                <div class="game-card-image">
+                    🧠
+                </div>
+                <div class="game-card-content">
+                    <h3>لعبة الذاكرة</h3>
+                    <p>اختبر ذاكرتك وابحث عن البطاقات المتشابهة. لعبة كلاسيكية لتنمية مهارات التركيز والذاكرة لدى الأطفال.</p>
+                    <button class="play-btn" data-game="memory">العب الآن</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🌟 مميزات التطبيق:</h3>
+            <ul>
+                <li>✅ يعمل دون اتصال بالإنترنت</li>
+                <li>✅ تصميم متجاوب مع جميع الأجهزة</li>
+                <li>✅ أيقونة جميلة للمسجد الأقصى</li>
+                <li>✅ واجهة سهلة الاستخدام للأطفال</li>
+                <li>✅ محتوى تعليمي مفيد</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- لعبة البطاقات الأصلية -->
+    <div id="cardsGame" class="game-container">
+        <div class="game-header">
+            <button class="back-btn" id="backFromCards">← العودة للرئيسية</button>
+            <h1>لعبة بطاقات المسجد الأقصى</h1>
+            <div></div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🎮 طريقة اللعب:</h3>
+            <ol>
+                <li>انقر على زر "ابدأ اللعب"</li>
+                <li>انقر على البطاقات لقلبها</li>
+                <li>حاول أن تجد الصورة التي تطابق اسمها</li>
+                <li>عندما تجد تطابقًا صحيحًا، ستزداد نقاطك</li>
+                <li>يجب أن تجد جميع المطابقات الخمسة</li>
+            </ol>
+        </div>
+        
+        <div class="game-info">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="matches">المطابقات: <span id="matches">0</span>/5</div>
+            <div class="timer">الوقت: <span id="timer">0</span> ثانية</div>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn">ابدأ اللعب</button>
+            <button id="restartBtn">أعد</button>
+        </div>
+        
+        <div class="message" id="message">انقر على "ابدأ اللعب" للبدء</div>
+        
+        <div class="game-board" id="gameBoard"></div>
+    </div>
+    
+    <!-- لعبة الذاكرة الجديدة -->
+    <div id="memoryGame" class="game-container">
+        <div class="game-header">
+            <button class="back-btn" id="backFromMemory">← العودة للرئيسية</button>
+            <h1>لعبة الذاكرة</h1>
+            <div></div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🎮 طريقة اللعب:</h3>
+            <ol>
+                <li>اختر مستوى الصعوبة</li>
+                <li>انقر على زر "ابدأ اللعب"</li>
+                <li>انقر على البطاقات لقلبها</li>
+                <li>حاول أن تجد البطاقات المتشابهة</li>
+                <li>حاول إنهاء اللعبة بأقل عدد من المحاولات</li>
+            </ol>
+        </div>
+        
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" data-level="easy">سهل (6 أزواج)</button>
+            <button class="difficulty-btn" data-level="medium">متوسط (8 أزواج)</button>
+            <button class="difficulty-btn" data-level="hard">صعب (12 زوج)</button>
+        </div>
+        
+        <div class="game-info">
+            <div class="score">النقاط: <span id="memoryScore">0</span></div>
+            <div class="matches">المحاولات: <span id="attempts">0</span></div>
+            <div class="timer">الوقت: <span id="memoryTimer">0</span> ثانية</div>
+        </div>
+        
+        <div class="controls">
+            <button id="memoryStartBtn">ابدأ اللعب</button>
+            <button id="memoryRestartBtn">أعد</button>
+        </div>
+        
+        <div class="message" id="memoryMessage">اختر مستوى الصعوبة وانقر على "ابدأ اللعب"</div>
+        
+        <div class="memory-game-board" id="memoryGameBoard"></div>
+    </div>
+
+    <script>
+        // === إدارة التنقل بين الصفحات ===
+        const homePage = document.getElementById('homePage');
+        const cardsGame = document.getElementById('cardsGame');
+        const memoryGame = document.getElementById('memoryGame');
+        
+        function showHomePage() {
+            homePage.style.display = 'block';
+            cardsGame.style.display = 'none';
+            memoryGame.style.display = 'none';
+        }
+        
+        function showCardsGame() {
+            homePage.style.display = 'none';
+            cardsGame.style.display = 'block';
+            memoryGame.style.display = 'none';
+            initGame();
+        }
+        
+        function showMemoryGame() {
+            homePage.style.display = 'none';
+            cardsGame.style.display = 'none';
+            memoryGame.style.display = 'block';
+            initMemoryGame();
+        }
+        
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const game = this.getAttribute('data-game');
+                if (game === 'cards') {
+                    showCardsGame();
+                } else if (game === 'memory') {
+                    showMemoryGame();
+                }
+            });
+        });
+        
+        document.getElementById('backFromCards').addEventListener('click', showHomePage);
+        document.getElementById('backFromMemory').addEventListener('click', showHomePage);
+        
+        // === لعبة البطاقات الأصلية ===
+        const imageSources = {
+            'المسجد الأقصى': 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXgdIU5UJMSOIutUI6wwtbflMFblTsIZfZv3UsEwWhem5lkGv6tqfE6r-LWk2LUC7ONZz95IpYjOqbx7uy3Q5S1e44Ts57f74Tj3VVxFnnwMN2kfXaPR1gIVvAFOET72eq5K5HbXFG8SE/s1600/0010.jpg',
+            'قبة الصخرة': 'https://www.alkhaleej.ae/sites/default/files/styles/social_large/public/migrated/50e717b5-dc41-431d-a6df-278cd610526c.jpg?itok=kyEE7T4T',
+            'الجامع القبلي': 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Al-Qibli_Chapel.jpg',
+            'البوائك': 'https://d3cehsdnpumv4z.cloudfront.net/images/bawaek/baekanorthwest.jpeg',
+            'حائط البراق': 'https://www.foraqsa.com/library/images/aqsa/landmarks/other/buraq_wall.jpg'
+        };
+
+        const gameCards = [
+            { id: 1, type: 'image', content: 'المسجد الأقصى' },
+            { id: 2, type: 'text', content: 'المسجد الأقصى', description: 'أولى القبلتين وثالث الحرمين' },
+            { id: 3, type: 'image', content: 'قبة الصخرة' },
+            { id: 4, type: 'text', content: 'قبة الصخرة', description: 'القبة الذهبية الشهيرة' },
+            { id: 5, type: 'image', content: 'الجامع القبلي' },
+            { id: 6, type: 'text', content: 'الجامع القبلي', description: 'المصلى الرئيسي للصلاة' },
+            { id: 7, type: 'image', content: 'البوائك' },
+            { id: 8, type: 'text', content: 'البوائك', description: 'الأقواس الحجرية الجميلة' },
+            { id: 9, type: 'image', content: 'حائط البراق' },
+            { id: 10, type: 'text', content: 'حائط البراق', description: 'حائط المسجد الأقصى الغربي' }
+        ];
+
+        const gameBoard = document.getElementById('gameBoard');
+        const scoreElement = document.getElementById('score');
+        const matchesElement = document.getElementById('matches');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const messageElement = document.getElementById('message');
+        const timerElement = document.getElementById('timer');
+
+        let score = 0;
+        let matchedPairs = 0;
+        let gameActive = false;
+        let flippedCards = [];
+        let canFlip = true;
+        let gameTimer = 0;
+        let timerInterval = null;
+
+        function initGame() {
+            gameBoard.innerHTML = '';
+            score = 0;
+            matchedPairs = 0;
+            flippedCards = [];
+            canFlip = false;
+            gameTimer = 0;
+            
+            clearInterval(timerInterval);
+            timerElement.textContent = gameTimer;
+            
+            scoreElement.textContent = score;
+            matchesElement.textContent = matchedPairs;
+            messageElement.textContent = 'انقر على "ابدأ اللعب" للبدء';
+            messageElement.style.color = '#2d5016';
+            
+            const shuffledCards = [...gameCards].sort(() => Math.random() - 0.5);
+            
+            shuffledCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.id = card.id;
+                cardElement.dataset.content = card.content;
+                
+                const cardInner = document.createElement('div');
+                cardInner.className = 'card-inner';
+                
+                const cardFront = document.createElement('div');
+                cardFront.className = 'card-front';
+                cardFront.textContent = '؟';
+                
+                const cardBack = document.createElement('div');
+                cardBack.className = `card-back ${card.type === 'image' ? 'image-card' : 'text-card'}`;
+                
+                if (card.type === 'image') {
+                    const imageUrl = imageSources[card.content];
+                    cardBack.style.backgroundImage = `url('${imageUrl}')`;
+                } else {
+                    cardBack.innerHTML = `<div style="text-align: center;">
+                        <strong style="font-size: 20px; color: #2d5016;">${card.content}</strong><br>
+                        <small style="font-size: 14px; color: #666;">${card.description}</small>
+                    </div>`;
+                }
+                
+                cardInner.appendChild(cardFront);
+                cardInner.appendChild(cardBack);
+                cardElement.appendChild(cardInner);
+                
+                cardElement.addEventListener('click', () => flipCard(cardElement));
+                gameBoard.appendChild(cardElement);
+            });
+            
+            updateGameInfo();
+            gameActive = false;
+            startBtn.textContent = 'ابدأ اللعب';
+            startBtn.disabled = false;
+        }
+
+        function startGame() {
+            if (gameActive) return;
+            
+            gameActive = true;
+            canFlip = true;
+            startBtn.textContent = 'اللعبة تعمل';
+            startBtn.disabled = true;
+            
+            messageElement.textContent = 'ابدأ بمطابقة الصور مع أسمائها!';
+            messageElement.style.color = '#2d5016';
+            
+            clearInterval(timerInterval);
+            gameTimer = 0;
+            timerElement.textContent = gameTimer;
+            timerInterval = setInterval(() => {
+                gameTimer++;
+                timerElement.textContent = gameTimer;
+            }, 1000);
+            
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                card.classList.add('flipped');
+            });
+            
+            setTimeout(() => {
+                allCards.forEach(card => {
+                    card.classList.remove('flipped');
+                });
+                messageElement.textContent = 'انقر على بطاقتين لمطابقتهما';
+            }, 3000);
+        }
+
+        function flipCard(card) {
+            if (!gameActive || !canFlip || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                checkForMatch();
+            }
+        }
+
+        function checkForMatch() {
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+            
+            const content1 = card1.dataset.content;
+            const content2 = card2.dataset.content;
+            
+            if (content1 === content2) {
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    card1.classList.add('celebrate');
+                    card2.classList.add('celebrate');
+                    
+                    score += 20;
+                    matchedPairs++;
+                    updateGameInfo();
+                    
+                    messageElement.textContent = 'ممتاز! تطابق صحيح!';
+                    messageElement.style.color = '#2d5016';
+                    
+                    setTimeout(() => {
+                        card1.classList.remove('celebrate');
+                        card2.classList.remove('celebrate');
+                    }, 500);
+                    
+                    if (matchedPairs === 5) {
+                        endGame();
+                    }
+                    
+                    flippedCards = [];
+                    canFlip = true;
+                }, 600);
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    
+                    messageElement.textContent = 'حاول مرة أخرى!';
+                    messageElement.style.color = '#8B0000';
+                    
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            canFlip = false;
+            startBtn.disabled = false;
+            startBtn.textContent = 'ابدأ اللعب';
+            
+            clearInterval(timerInterval);
+            
+            const finalScore = score + (matchedPairs * 10) + Math.max(0, 300 - gameTimer);
+            score = finalScore;
+            updateGameInfo();
+            
+            messageElement.innerHTML = `أحسنت! أكملت جميع المطابقات!<br>نقاطك: ${score}<br>الوقت المستغرق: ${gameTimer} ثانية`;
+            messageElement.style.color = '#2d5016';
+            
+            setTimeout(() => {
+                alert(`أحسنت! لقد أكملت اللعبة بنجاح!\n\nنقاطك النهائية: ${score}\nالوقت المستغرق: ${gameTimer} ثانية`);
+            }, 500);
+        }
+
+        function updateGameInfo() {
+            scoreElement.textContent = score;
+            matchesElement.textContent = matchedPairs;
+        }
+
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', initGame);
+
+        // === لعبة الذاكرة الجديدة ===
+        const memoryGameBoard = document.getElementById('memoryGameBoard');
+        const memoryScoreElement = document.getElementById('memoryScore');
+        const attemptsElement = document.getElementById('attempts');
+        const memoryTimerElement = document.getElementById('memoryTimer');
+        const memoryStartBtn = document.getElementById('memoryStartBtn');
+        const memoryRestartBtn = document.getElementById('memoryRestartBtn');
+        const memoryMessageElement = document.getElementById('memoryMessage');
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+
+        const memorySymbols = ['🕌', '🌙', '⭐', '🕋', '📿', '🕌', '🌙', '⭐', '🕋', '📿', '🕯️', '📖', '🕯️', '📖'];
+        
+        let memoryScore = 0;
+        let memoryAttempts = 0;
+        let memoryMatchedPairs = 0;
+        let memoryGameActive = false;
+        let memoryFlippedCards = [];
+        let memoryCanFlip = true;
+        let memoryGameTimer = 0;
+        let memoryTimerInterval = null;
+        let currentDifficulty = 'easy';
+        let totalPairs = 6;
+
+        function initMemoryGame() {
+            memoryGameBoard.innerHTML = '';
+            memoryScore = 0;
+            memoryAttempts = 0;
+            memoryMatchedPairs = 0;
+            memoryFlippedCards = [];
+            memoryCanFlip = false;
+            memoryGameTimer = 0;
+            
+            clearInterval(memoryTimerInterval);
+            memoryTimerElement.textContent = memoryGameTimer;
+            
+            memoryScoreElement.textContent = memoryScore;
+            attemptsElement.textContent = memoryAttempts;
+            memoryMessageElement.textContent = 'اختر مستوى الصعوبة وانقر على "ابدأ اللعب"';
+            memoryMessageElement.style.color = '#2d5016';
+            
+            switch(currentDifficulty) {
+                case 'easy': totalPairs = 6; break;
+                case 'medium': totalPairs = 8; break;
+                case 'hard': totalPairs = 12; break;
+            }
+            
+            const symbolsToUse = memorySymbols.slice(0, totalPairs);
+            const memoryCards = [...symbolsToUse, ...symbolsToUse];
+            const shuffledCards = memoryCards.sort(() => Math.random() - 0.5);
+            
+            shuffledCards.forEach((symbol, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.id = index;
+                cardElement.dataset.symbol = symbol;
+                
+                const cardInner = document.createElement('div');
+                cardInner.className = 'card-inner';
+                
+                const cardFront = document.createElement('div');
+                cardFront.className = 'card-front';
+                cardFront.textContent = '؟';
+                
+                const cardBack = document.createElement('div');
+                cardBack.className = 'card-back memory-card';
+                cardBack.textContent = symbol;
+                
+                cardInner.appendChild(cardFront);
+                cardInner.appendChild(cardBack);
+                cardElement.appendChild(cardInner);
+                
+                cardElement.addEventListener('click', () => flipMemoryCard(cardElement));
+                memoryGameBoard.appendChild(cardElement);
+            });
+            
+            if (totalPairs === 6) {
+                memoryGameBoard.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            } else if (totalPairs === 8) {
+                memoryGameBoard.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            } else {
+                memoryGameBoard.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            }
+            
+            updateMemoryGameInfo();
+            memoryGameActive = false;
+            memoryStartBtn.textContent = 'ابدأ اللعب';
+            memoryStartBtn.disabled = false;
+        }
+
+        function startMemoryGame() {
+            if (memoryGameActive) return;
+            
+            memoryGameActive = true;
+            memoryCanFlip = true;
+            memoryStartBtn.textContent = 'اللعبة تعمل';
+            memoryStartBtn.disabled = true;
+            
+            memoryMessageElement.textContent = 'ابدأ بالبحث عن البطاقات المتشابهة!';
+            memoryMessageElement.style.color = '#2d5016';
+            
+            clearInterval(memoryTimerInterval);
+            memoryGameTimer = 0;
+            memoryTimerElement.textContent = memoryGameTimer;
+            memoryTimerInterval = setInterval(() => {
+                memoryGameTimer++;
+                memoryTimerElement.textContent = memoryGameTimer;
+            }, 1000);
+            
+            const allCards = document.querySelectorAll('#memoryGameBoard .card');
+            allCards.forEach(card => {
+                card.classList.add('flipped');
+            });
+            
+            setTimeout(() => {
+                allCards.forEach(card => {
+                    card.classList.remove('flipped');
+                });
+                memoryMessageElement.textContent = 'انقر على بطاقتين للعثور على المطابقات';
+            }, 3000);
+        }
+
+        function flipMemoryCard(card) {
+            if (!memoryGameActive || !memoryCanFlip || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            memoryFlippedCards.push(card);
+            
+            if (memoryFlippedCards.length === 2) {
+                memoryCanFlip = false;
+                checkMemoryMatch();
+            }
+        }
+
+        function checkMemoryMatch() {
+            memoryAttempts++;
+            attemptsElement.textContent = memoryAttempts;
+            
+            const card1 = memoryFlippedCards[0];
+            const card2 = memoryFlippedCards[1];
+            
+            const symbol1 = card1.dataset.symbol;
+            const symbol2 = card2.dataset.symbol;
+            
+            if (symbol1 === symbol2) {
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    card1.classList.add('celebrate');
+                    card2.classList.add('celebrate');
+                    
+                    memoryScore += 15;
+                    memoryMatchedPairs++;
+                    updateMemoryGameInfo();
+                    
+                    memoryMessageElement.textContent = 'ممتاز! وجدت تطابقًا!';
+                    memoryMessageElement.style.color = '#2d5016';
+                    
+                    setTimeout(() => {
+                        card1.classList.remove('celebrate');
+                        card2.classList.remove('celebrate');
+                    }, 500);
+                    
+                    if (memoryMatchedPairs === totalPairs) {
+                        endMemoryGame();
+                    }
+                    
+                    memoryFlippedCards = [];
+                    memoryCanFlip = true;
+                }, 600);
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    
+                    memoryMessageElement.textContent = 'لا يوجد تطابق، حاول مرة أخرى!';
+                    memoryMessageElement.style.color = '#8B0000';
+                    
+                    memoryFlippedCards = [];
+                    memoryCanFlip = true;
+                }, 1000);
+            }
+        }
+
+        function endMemoryGame() {
+            memoryGameActive = false;
+            memoryCanFlip = false;
+            memoryStartBtn.disabled = false;
+            memoryStartBtn.textContent = 'ابدأ اللعب';
+            
+            clearInterval(memoryTimerInterval);
+            
+            const timeBonus = Math.max(0, 300 - memoryGameTimer);
+            const attemptsBonus = Math.max(0, 50 - memoryAttempts) * 2;
+            const finalScore = memoryScore + timeBonus + attemptsBonus;
+            memoryScore = finalScore;
+            updateMemoryGameInfo();
+            
+            memoryMessageElement.innerHTML = `أحسنت! أكملت جميع المطابقات!<br>نقاطك: ${memoryScore}<br>الوقت المستغرق: ${memoryGameTimer} ثانية<br>عدد المحاولات: ${memoryAttempts}`;
+            memoryMessageElement.style.color = '#2d5016';
+            
+            setTimeout(() => {
+                alert(`أحسنت! لقد أكملت لعبة الذاكرة بنجاح!\n\nنقاطك النهائية: ${memoryScore}\nالوقت المستغرق: ${memoryGameTimer} ثانية\nعدد المحاولات: ${memoryAttempts}`);
+            }, 500);
+        }
+
+        function updateMemoryGameInfo() {
+            memoryScoreElement.textContent = memoryScore;
+            attemptsElement.textContent = memoryAttempts;
+        }
+
+        memoryStartBtn.addEventListener('click', startMemoryGame);
+        memoryRestartBtn.addEventListener('click', initMemoryGame);
+
+        difficultyButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                difficultyButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentDifficulty = this.getAttribute('data-level');
+                initMemoryGame();
+            });
+        });
+
+        // === PWA ===
+        window.addEventListener('load', () => {
+            // تسجيل Service Worker
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'aqsa-games-final';
+                    
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(['./']))
+                                .then(() => self.skipWaiting())
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => response || fetch(event.request))
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swURL)
+                    .then(() => console.log('✅ Service Worker مسجل'))
+                    .catch(err => console.log('❌ Service Worker فشل:', err));
+            }
+            
+            // عرض الصفحة الرئيسية
+            showHomePage();
+            initGame();
+            
+            // عرض رسالة إذا كان التطبيق مثبتاً
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('📱 التطبيق يعمل كـ PWA');
+            }
+        });
+
+        // رسالة عند التثبيت
+        window.addEventListener('appinstalled', () => {
+            alert('🎉 تم تثبيت التطبيق بنجاح!\n\nسترى الآن أيقونة المسجد الأقصى الجميلة على شاشتك الرئيسية.');
+        });
+    </script>
+</body>
+</html>
